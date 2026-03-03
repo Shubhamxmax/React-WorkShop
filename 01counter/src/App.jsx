@@ -8,10 +8,13 @@ function App() {
   const [counter,setCounter]=useState(1)
 
 const addValue=()=>{
-    let counter1=counter+1;
-    if(counter===5)
-      return;
-    setCounter(counter1)
+    // let counter1=counter+1;
+    // if(counter===5)
+    //   return;
+    setCounter(counter+1)
+    setCounter(counter+1)
+    setCounter(counter+1)
+    setCounter(counter+1)
   }
 
   function removeValue(){
