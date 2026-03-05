@@ -31,7 +31,7 @@ const addValue=()=>{
     <h1>Chai aur React | Shubham</h1>
     <h2>Counter Value:{counter}</h2>
     <button
-    onClick={addValue}>Add Value</button>
+    onClick={()=>{addValue()}}>Add Value</button>
     <br />
     <br/>
     <button onClick={removeValue}>Remove Value</button>
