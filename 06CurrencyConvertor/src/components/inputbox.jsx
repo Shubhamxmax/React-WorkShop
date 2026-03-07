@@ -1,4 +1,4 @@
-import React,{useId} from "react";
+import React, { useId } from "react";
 
 function InputBox({
   label,
@@ -6,7 +6,7 @@ function InputBox({
   onAmountChange,
   onCurrencyChange,
   currencyOptions = [],
-  selectCurrency = "",
+  selectCurrency,
   amountDisable = false,
   currencyDisable = false,
   className = "",
