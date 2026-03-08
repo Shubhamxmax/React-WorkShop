@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-     <h1 className='bg-green-600 p-4 text-4xl  rounded-t-2xl '>ReactRouter</h1>
+
     </>
   )
 }
