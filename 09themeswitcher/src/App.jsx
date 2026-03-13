@@ -11,31 +11,17 @@ function App() {
 const [thememode,setmode]=useState("light")
 
 
-
-const lightheme=()=>{
-  setmode("light")
-
-}
-const darktheme=()=>{
-  setmode("dark")
-
-}
+const lightheme=()=> setmode("light")
+const darktheme=()=>setmode("dark")
 
 //actual change in theme
 
 useEffect(() => {
   const html = document.documentElement
-
   html.classList.remove("dark")
-
-  if (thememode === "dark") {
+  if (thememode === "dark") 
     html.classList.add("dark")
-  }
 }, [thememode])
-
-
-
-
 
   return (
    <Themeprovider value={{thememode,lightheme,darktheme}}>
