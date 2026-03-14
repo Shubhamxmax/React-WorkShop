@@ -35,13 +35,16 @@ const toggleComplete=(id)=>{
 
 useEffect(()=>
   {
-    JSON.parse(localStorage.getItem("todos"))
+    const todo=JSON.parse(localStorage.getItem("todos"))
 
     if(todos && todos.length>0){
       settodo(todos)
     }
   },[])
 
+  useEffect(()=>{
+     loacalStorage.setItem("todos",JSON.stringify(todos));
+  },[todos])
 
   return (
     <Todoprovider value={{todos,addTodo,updateTodo,deleteTodo,toggleComplete  }}>
@@ -50,7 +53,9 @@ useEffect(()=>
         <h1 className="text-2xl font-bold text-center mb-8 mt-2">
           Manage Your Todos
         </h1>
-        <div className="mb-4">{/* Todo form goes here */}</div>
+        <div className="mb-4">{/* Todo form goes here */}
+          <TodoForm/>
+        </div>
         <div className="flex flex-wrap gap-y-3">
           {/*Loop and Add TodoItem here */}
         </div>
