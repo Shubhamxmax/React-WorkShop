@@ -1,68 +1,83 @@
 import { useEffect, useState } from "react";
-import {Todoprovider} from '../index.js'
+import { Todoprovider } from "./Context/index.js";
 
 import "./App.css";
+import TodoItem from "./Componenets/Todoitem.jsx";
+import Todoform from "./Componenets/Todoform.jsx";
 
 function App() {
+  const [todos, settodo] = useState([]);
 
-  const [todos,settodo]=useState([]);
+  const addTodo = (todo) => {
+    settodo((prev) => [{ id: Date.now(), ...todo }, ...prev]);
+  };
 
-  const addTodo=(todo)=>{
-    settodo((prev)=>[{id:Date.now(), ...todo},...prev])
-  }
+  const updateTodo = (id, todo) => {
+    settodo((prev) =>
+      prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo)),
+    );
+  };
 
+  const deleteTodo = (id) => {
+    settodo((prev) => prev.filter((todo) => todo.id !== id));
+  };
 
-//   {id:Date.now(), ...todo} this means adding new value to todo(obj)
-//   [{id:Date.now(), ...todo},...prev] this means adding a new obj to array of objects.
+  const toggleComplete = (id) => {
+    settodo((prev) =>
+      prev.map((prevtodo) =>
+        prevtodo.id === id
+          ? { ...prevtodo, completed: !prevtodo.completed }
+          : prevtodo,
+      ),
+    );
+  };
 
-//prev is an array of  objects.Each object is a unique todo.We are Adding here brand new todo
-  
-  /*...variable = “spread all elements or properties of this variable”
-all + add ...variable pattern = “add a new item/object while keeping all the old ones”
-Essential in React because state should never be mutated directly. */
-
-const updateTodo=(id,todo)=>{
-  settodo((prev)=> prev.map((prevTodo)=>(prevTodo.id===id?todo:prevTodo)))
-}
-
-const deleteTodo=(id)=>{ 
-  settodo((prev)=>prev.filter((todo)=>todo.id!==id))
-}
-
-const toggleComplete=(id)=>{
-  settodo((prev)=> prev.map((prevtodo)=>prevtodo.id===id?{...prevtodo,completed:!prevtodo.completed}:prevtodo))
-}
-
-useEffect(()=>
-  {
-    const todo=JSON.parse(localStorage.getItem("todos"))
-
-    if(todos && todos.length>0){
-      settodo(todos)
+  useEffect(() => {
+    const todo = JSON.parse(localStorage.getItem("todos"));
+    if (todo && todo.length > 0) {
+      settodo(todo);
     }
-  },[])
+  }, []);
 
-  useEffect(()=>{
-     loacalStorage.setItem("todos",JSON.stringify(todos));
-  },[todos])
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
-    <Todoprovider value={{todos,addTodo,updateTodo,deleteTodo,toggleComplete  }}>
-    <div className="bg-[#172842] min-h-screen py-8">
-      <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 text-white">
-        <h1 className="text-2xl font-bold text-center mb-8 mt-2">
-          Manage Your Todos
-        </h1>
-        <div className="mb-4">{/* Todo form goes here */}
-          <TodoForm/>
-        </div>
-        <div className="flex flex-wrap gap-y-3">
-          {/*Loop and Add TodoItem here */}
+    <Todoprovider
+      value={{ todos, addTodo, updateTodo, deleteTodo, toggleComplete }}
+    >
+      <div className="bg-[#172842] min-h-screen py-8">
+        <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 text-white">
+          <h1 className="text-2xl font-bold text-center mb-8 mt-2">
+            Manage Your Todos
+          </h1>
+          <div className="mb-4">
+            {/* Todo form goes here */}
+            <Todoform />
+          </div>
+          <div className="flex flex-wrap gap-y-3">
+            {/*Loop and Add TodoItem here */}
+            
+            {todos.map((todo) => (
+              <div key={todo.id} className="w-full">
+                <TodoItem todo={todo} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
     </Todoprovider>
   );
 }
 
 export default App;
+
+//   {id:Date.now(), ...todo} this means adding new value to todo(obj)
+//   [{id:Date.now(), ...todo},...prev] this means adding a new obj to array of objects.
+
+//prev is an array of  objects.Each object is a unique todo.We are Adding here brand new todo
+
+/*...variable = “spread all elements or properties of this variable”
+all + add ...variable pattern = “add a new item/object while keeping all the old ones”
+Essential in React because state should never be mutated directly. */

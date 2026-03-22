@@ -1,5 +1,5 @@
-import React from "react";
-import { useTodo } from "../contexts/Todocontext";
+import React, { useState } from "react";
+import { useTodo } from "../Context/todocontext.js";
 
 function TodoItem({ todo }) {
   const [isTodoEditable, setIsTodoEditable] = useState(false);
@@ -44,7 +44,8 @@ function TodoItem({ todo }) {
 
           if (isTodoEditable) {
             editTodo();
-          } else setIsTodoEditable((prev) => !prev);
+          }
+         else setIsTodoEditable((prev) => !prev);
         }}
         disabled={todo.completed}
       >
